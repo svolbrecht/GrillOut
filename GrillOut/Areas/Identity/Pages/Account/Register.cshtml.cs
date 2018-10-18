@@ -51,7 +51,7 @@ namespace GrillOut.Areas.Identity.Pages.Account
             public string PhoneNumber { get; set; }
 
             [Display(Name = "Employee")]
-            public bool isEmployee { get; set; }
+            public bool IsEmployee { get; set; }
 
             [Required]
             [EmailAddress]
@@ -93,7 +93,7 @@ namespace GrillOut.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(StaticDetails.EmployeeEndUser));
                     }
 
-                    if (Input.isEmployee)
+                    if (Input.IsEmployee)
                     {
                         await _userManager.AddToRoleAsync(user, StaticDetails.EmployeeEndUser);
                     }
@@ -115,6 +115,16 @@ namespace GrillOut.Areas.Identity.Pages.Account
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    //redirect here
+                    if (Input.IsEmployee == true)
+                    {
+                        return RedirectToAction("Create", "Employees");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Create", "Customers");
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

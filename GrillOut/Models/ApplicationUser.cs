@@ -16,6 +16,6 @@ namespace GrillOut.Models
         public string Name { get; set; }
 
         [NotMapped]
-        public bool isEmployee { get; set; }
+        public bool IsEmployee { get; set; }
     }
 }
