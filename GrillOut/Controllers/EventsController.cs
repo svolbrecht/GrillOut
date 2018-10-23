@@ -77,7 +77,7 @@ namespace GrillOut.Controllers
                 _context.Add(events);
                 await _context.SaveChangesAsync();
                 SendSimpleMessage();
-                return RedirectToAction("CustomersEvents", "Customers");
+                return RedirectToAction("Payment", "Customers");
             }
             //ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
             //ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", events.EmployeeId);

@@ -1,0 +1,16 @@
+﻿@*@model BizBook.Models.Ad*@
+
+@using Microsoft.Extensions.Options
+@*@inject IOptions<StripeSettings> Stripe*@
+
+
+<form action="CustomersEvents" method="POST">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_5NYHswh9rFRoEWsxHuvX1bKi"
+            data-amount="10000"
+            data-name="Demo Site"
+            data-description="Example charge"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto">
+    </script>
+</form>

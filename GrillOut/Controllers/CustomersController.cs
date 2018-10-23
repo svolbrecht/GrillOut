@@ -184,5 +184,13 @@ namespace GrillOut.Controllers
         {
             return _context.Customers.Any(e => e.CustomerId == id);
         }
+
+        public IActionResult Payment(int? id)
+        {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var ad = _context.Customers
+            //    .FirstOrDefault(m => m.ApplicationUserId == userid);
+            return View();
+        }
     }
 }
