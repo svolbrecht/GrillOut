@@ -4,14 +4,16 @@ using GrillOut.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GrillOut.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181022143237_dbset for event added")]
+    partial class dbsetforeventadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +59,7 @@ namespace GrillOut.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Events", b =>
+            modelBuilder.Entity("GrillOut.Models.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +69,7 @@ namespace GrillOut.Data.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<int?>("EmployeeId");
+                    b.Property<int>("EmployeeId");
 
                     b.Property<DateTime>("EventDate");
 
@@ -277,7 +279,7 @@ namespace GrillOut.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Events", b =>
+            modelBuilder.Entity("GrillOut.Models.Event", b =>
                 {
                     b.HasOne("GrillOut.Models.Customer", "Customer")
                         .WithMany()
@@ -286,7 +288,8 @@ namespace GrillOut.Data.Migrations
 
                     b.HasOne("GrillOut.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -45,19 +45,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CityStateZip)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IsDelivered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPickedUp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+            @* @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
             </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CustomerID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
             </td>
         </tr>
 }

@@ -7,22 +7,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GrillOut.Data;
 using GrillOut.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace GrillOut.Controllers
 {
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        UserManager<IdentityUser> _userManager;
 
-        public EmployeesController(ApplicationDbContext context)
+        public EmployeesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Employees
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Employees.Include(e => e.ApplicationUser);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> EmployeesEvents()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(m => m.ApplicationUserId == userId);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            var applicationDbContext = _context.Events.Where(c => c.EmployeeId == employee.EmployeeId).Include(c => c.Customer);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -57,13 +74,14 @@ namespace GrillOut.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,EmployeeName,IsAssigned,ApplicationUserId")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,EmployeeName,ApplicationUserId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
+                employee.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "Events");
             }
             ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", employee.ApplicationUserId);
             return View(employee);

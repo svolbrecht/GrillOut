@@ -138,12 +138,12 @@ namespace GrillOut.Areas.Identity.Pages.Account
                 if (await _userManager.IsInRoleAsync(user, "Employee"))
                 {
                     var userId = user.Id;
-                    return RedirectToAction("Index", "Employees", new { Id = userId });
+                    return RedirectToAction("Index", "Events", new { Id = userId });
                 }
                 else
                 {
                     var userId = user.Id;
-                    return RedirectToAction("Details", "Customers", new { Id = userId });
+                    return RedirectToAction("CustomersEvents", "Customers", new { Id = userId });
                 }
             }
             else

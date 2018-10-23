@@ -7,16 +7,33 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GrillOut.Data;
 using GrillOut.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace GrillOut.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CustomersController(ApplicationDbContext context)
+        public CustomersController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> CustomersEvents()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(m => m.ApplicationUserId == userId);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            var applicationDbContext = _context.Events.Where(c => c.CustomerId == customer.CustomerId).Include(e => e.Employee);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Customers
@@ -29,20 +46,30 @@ namespace GrillOut.Controllers
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _context.Customers
+                .FirstOrDefaultAsync(m => m.ApplicationUserId == userId);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .Include(c => c.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.CustomerID == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
+            return View(user);
 
-            return View(customer);
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var customer = await _context.Customers
+            //    .Include(c => c.ApplicationUser)
+            //    .FirstOrDefaultAsync(m => m.CustomerID == id);
+            //if (customer == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(customer);
         }
 
         // GET: Customers/Create
@@ -61,9 +88,10 @@ namespace GrillOut.Controllers
         {
             if (ModelState.IsValid)
             {
+                customer.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details");
             }
             ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", customer.ApplicationUserId);
             return View(customer);
@@ -93,7 +121,7 @@ namespace GrillOut.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerID,CustomerName,StreetAddress,CityStateZip,IsDelivered,IsPickedUp,ApplicationUserId")] Customer customer)
         {
-            if (id != customer.CustomerID)
+            if (id != customer.CustomerId)
             {
                 return NotFound();
             }
@@ -107,7 +135,7 @@ namespace GrillOut.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.CustomerID))
+                    if (!CustomerExists(customer.CustomerId))
                     {
                         return NotFound();
                     }
@@ -132,7 +160,7 @@ namespace GrillOut.Controllers
 
             var customer = await _context.Customers
                 .Include(c => c.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.CustomerID == id);
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
             {
                 return NotFound();
@@ -154,7 +182,7 @@ namespace GrillOut.Controllers
 
         private bool CustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.CustomerID == id);
+            return _context.Customers.Any(e => e.CustomerId == id);
         }
     }
 }
