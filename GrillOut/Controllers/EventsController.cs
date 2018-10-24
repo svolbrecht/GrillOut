@@ -186,7 +186,7 @@ namespace GrillOut.Controllers
             request.AddParameter("domain", "sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org", ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
             request.AddParameter("from", "Excited User <mailgun@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org>");
-            //request.AddParameter("to", "svolbrecht@yahoo.com");
+            request.AddParameter("to", "svolbrecht@yahoo.com");
             request.AddParameter("to", "YOU@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org");
             request.AddParameter("subject", "Hello");
             request.AddParameter("text", "Testing some Mailgun awesomness!");

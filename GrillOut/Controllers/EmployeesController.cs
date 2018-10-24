@@ -9,6 +9,8 @@ using GrillOut.Data;
 using GrillOut.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace GrillOut.Controllers
 {
@@ -173,6 +175,131 @@ namespace GrillOut.Controllers
         private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.EmployeeId == id);
+        }
+
+        public async Task<IActionResult> MarkDelivered(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var events = await _context.Events.FindAsync(id);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", events.EmployeeId);
+            return View(events);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarkDelivered(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
+        {
+            if (id != events.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(events);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventsExists(events.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(EmployeesEvents));
+            }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", events.EmployeeId);
+            return View(events);
+        }
+
+        public async Task<IActionResult> MarkPickedUp(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var events = await _context.Events.FindAsync(id);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", events.EmployeeId);
+            return View(events);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarkPickedUp(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
+        {
+            if (id != events.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(events);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventsExists(events.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(EmployeesEvents));
+            }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", events.EmployeeId);
+            return View(events);
+        }
+        private bool EventsExists(int id)
+        {
+            return _context.Events.Any(e => e.Id == id);
+        }
+
+        public static IRestResponse SendSimpleMessage(string text)
+        {
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+            client.Authenticator =
+                new HttpBasicAuthenticator("api",
+                                            Keys.mailgunKey);
+            RestRequest request = new RestRequest();
+            request.AddParameter("domain", "sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", "Excited User <mailgun@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org>");
+            request.AddParameter("to", "svolbrecht@yahoo.com");
+            request.AddParameter("to", "YOU@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org");
+            request.AddParameter("subject", "Hello");
+            request.AddParameter("text", text);
+            request.Method = Method.POST;
+            return client.Execute(request);
         }
     }
 }

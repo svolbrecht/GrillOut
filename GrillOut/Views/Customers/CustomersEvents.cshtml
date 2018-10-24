@@ -28,12 +28,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.CityStateZip)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.IsDelivered)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsPickedUp)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -55,17 +55,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CityStateZip)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IsDelivered)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsPickedUp)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="CustomerMap" asp-route-id="@item.Id">View Map</a> @*|
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
         </tr>
 }
     </tbody>
