@@ -62,8 +62,9 @@
             </td>
             <td>
                 <a asp-action="MarkDelivered" asp-route-id="@item.Id">Mark Delivered</a> |
-                <a asp-action="MarkPickedUp" asp-route-id="@item.Id">Mark Picked Up</a> @*|
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                <a asp-action="MarkPickedUp" asp-route-id="@item.Id">Mark Picked Up</a> |
+                <a asp-controller="Events" asp-action="EventMap" asp-route-id="@item.Id">Location</a> |
+                <a asp-controller="Employees" asp-action="EventDirections" asp-route-id="@item.Id">Directions</a>
             </td>
         </tr>
 }

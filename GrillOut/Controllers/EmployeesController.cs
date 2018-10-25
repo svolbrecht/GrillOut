@@ -301,5 +301,25 @@ namespace GrillOut.Controllers
             request.Method = Method.POST;
             return client.Execute(request);
         }
+
+        public async Task<IActionResult> EventDirections(int? id)
+        {
+            {
+                if (id == null)
+                {
+                    //not sure how to revise this for Core.  This code should alert user in thr case there is no user logged in.
+                    //return HttpStatusCode.BadRequest;
+                }
+                Events events = _context.Events.Find(id);
+                if (events == null)
+                {
+                    return NotFound();
+                }
+                //ViewBag.ApplicationUserId = new SelectList(_context.Users, "Id", "UserRole", businessProfile.ApplicationUser);
+                ViewBag.EventsAddress = events.StreetAddress;
+                ViewBag.CityStateZip = events.CityStateZip;
+                return View(events);
+            }
+        }
     }
 }
