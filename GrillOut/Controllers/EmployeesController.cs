@@ -318,6 +318,9 @@ namespace GrillOut.Controllers
                 //ViewBag.ApplicationUserId = new SelectList(_context.Users, "Id", "UserRole", businessProfile.ApplicationUser);
                 ViewBag.EventsAddress = events.StreetAddress;
                 ViewBag.CityStateZip = events.CityStateZip;
+                var eventStreetAddress = events.StreetAddress;
+                var eventCityStateZip = events.CityStateZip;
+                ViewBag.completeAddress = (eventStreetAddress + " " + eventCityStateZip);
                 return View(events);
             }
         }
