@@ -11,6 +11,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using RestSharp;
 using RestSharp.Authenticators;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace GrillOut.Controllers
 {
@@ -18,11 +20,13 @@ namespace GrillOut.Controllers
     {
         private readonly ApplicationDbContext _context;
         UserManager<IdentityUser> _userManager;
+        UserManager<ApplicationUser> _aspUserManager;
 
-        public EmployeesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public EmployeesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, UserManager<ApplicationUser> aspUserManager)
         {
             _context = context;
             _userManager = userManager;
+            _aspUserManager = aspUserManager;
         }
 
         // GET: Employees
@@ -283,24 +287,24 @@ namespace GrillOut.Controllers
             return _context.Events.Any(e => e.Id == id);
         }
 
-        public static IRestResponse SendSimpleMessage(string text)
-        {
-            RestClient client = new RestClient();
-            client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-            client.Authenticator =
-                new HttpBasicAuthenticator("api",
-                                            Keys.mailgunKey);
-            RestRequest request = new RestRequest();
-            request.AddParameter("domain", "sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org", ParameterType.UrlSegment);
-            request.Resource = "{domain}/messages";
-            request.AddParameter("from", "Excited User <mailgun@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org>");
-            request.AddParameter("to", "svolbrecht@yahoo.com");
-            request.AddParameter("to", "YOU@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org");
-            request.AddParameter("subject", "Hello");
-            request.AddParameter("text", text);
-            request.Method = Method.POST;
-            return client.Execute(request);
-        }
+        //public static IRestResponse SendSimpleMessage(string text)
+        //{
+        //    RestClient client = new RestClient();
+        //    client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+        //    client.Authenticator =
+        //        new HttpBasicAuthenticator("api",
+        //                                    Keys.mailgunKey);
+        //    RestRequest request = new RestRequest();
+        //    request.AddParameter("domain", "sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org", ParameterType.UrlSegment);
+        //    request.Resource = "{domain}/messages";
+        //    request.AddParameter("from", "Excited User <mailgun@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org>");
+        //    request.AddParameter("to", "svolbrecht@yahoo.com");
+        //    request.AddParameter("to", "YOU@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org");
+        //    request.AddParameter("subject", "Hello");
+        //    request.AddParameter("text", text);
+        //    request.Method = Method.POST;
+        //    return client.Execute(request);
+        //}
 
         public async Task<IActionResult> EventDirections(int? id)
         {
@@ -324,5 +328,31 @@ namespace GrillOut.Controllers
                 return View(events);
             }
         }
+
+        //public IActionResult SendDepartureEmail(int? id)
+        //{
+        //    var currentEvent = _context.Events.Where(c => c.Id == id);
+        //    var customerId = currentEvent.Select(c => c.CustomerId).FirstOrDefault();
+        //    var eventCustomer = _context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
+        //    var customerUserId = eventCustomer.ApplicationUserId;
+        //    ApplicationUser aspUser = _userManager.GetEmailAsync(eventCustomer);
+        //    var customerEmail = aspUser.Email;
+        //    var claims = _userManager.GetEmailAsync(eventCustomer);
+        //    DepartureEmail(customerEmail);
+        //    return RedirectToAction(nameof(EmployeesEvents));
+        //}
+        static async Task DepartureEmail(string customerEmail)
+        {
+            var apiKey = Keys.sendGridKey;
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com", "Example User");
+            var subject = "GrillOut Inbound!";
+            var to = new EmailAddress(customerEmail, "Example User");
+            var plainTextContent = "Your Grillout is on the way!";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
+        }
+
     }
 }

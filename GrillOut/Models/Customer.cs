@@ -13,6 +13,8 @@ namespace GrillOut.Models
         [Key]
         public int CustomerId { get; set; }
 
+        public string Email { get; set; }
+
         [Display(Name = "Your Name")]
         public string CustomerName { get; set; }
 
