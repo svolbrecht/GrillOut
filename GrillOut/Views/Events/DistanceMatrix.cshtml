@@ -33,28 +33,30 @@
         }
 
         #right-panel {
-            float: right;
+            float: center;
             width: 48%;
             padding-left: 2%;
         }
 
         #output {
-            font-size: 11px;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <div id="right-panel">
             <div id="inputs">
-                <pre>
-    @*var origin1 = {lat: 55.930, lng: -3.118};
-    var origin2 = 'Greenwich, England';
-    var destinationA = 'Stockholm, Sweden';
-    var destinationB = {lat: 50.087, lng: 14.421};*@
-                </pre>
+                @*<pre>
+                    var streetName = "@ViewBag.EventsAddress";
+                    var cityStateZip = "@ViewBag.CityStateZip";
+
+
+                    var origin = '999 Mt Vernon Ave Milwaukee, WI';
+                    var destination = (streetName + " " + cityStateZip + " ");
+                </pre>*@
             </div>
             <div>
-                <strong>Results</strong>
+                <h3><strong>Route Details</strong></h3>
             </div>
         <div id="output"></div>
     </div>
