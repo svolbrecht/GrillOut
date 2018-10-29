@@ -181,11 +181,11 @@ namespace GrillOut.Controllers
         {
             var apiKey = Keys.sendGridKey;
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("test@example.com", "Example User");
+            var from = new EmailAddress("test@example.com", "GrillOut");
             var subject = "GrillOut Confirmation";
-            var to = new EmailAddress("svolbrecht@yahoo.com", "Example User");
+            var to = new EmailAddress("wiscoditka@gmail.com", "Example User");
             var plainTextContent = "Your Grillout has been confirmed!";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var htmlContent = "Your Grillout has been confirmed!";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }

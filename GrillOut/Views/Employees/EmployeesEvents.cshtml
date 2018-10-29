@@ -68,8 +68,8 @@
                     <a asp-controller="Events" asp-action="EventMap" asp-route-id="@item.Id">Location</a> |
                     <a asp-controller="Employees" asp-action="EventDirections" asp-route-id="@item.Id">Directions</a> |
                     <a asp-controller="Events" asp-action="DistanceMatrix" asp-route-id="@item.Id">Estimated Delivery Time</a> |
-                    <a asp-action="SendDepartureEmailAsync" asp-route-id="@item.Id">Depart</a> |
-                    <a asp-action="" asp-route-id="@item.Id">Depart</a>
+                    <a asp-action="SendDepartureEmailAsync" asp-route-id="@item.Id">Depart</a> @*|
+                    <a asp-action="" asp-route-id="@item.Id">Depart</a>*@
                 </td>
             </tr>
         }

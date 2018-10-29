@@ -304,20 +304,18 @@ namespace GrillOut.Controllers
         //    return client.Execute(request);
         //}
 
-        public async Task<IActionResult> EventDirections(int? id)
+        public IActionResult EventDirections(int? id)
         {
             {
                 if (id == null)
                 {
-                    //not sure how to revise this for Core.  This code should alert user in thr case there is no user logged in.
-                    //return HttpStatusCode.BadRequest;
+                    return NotFound();
                 }
                 Events events = _context.Events.Find(id);
                 if (events == null)
                 {
                     return NotFound();
                 }
-                //ViewBag.ApplicationUserId = new SelectList(_context.Users, "Id", "UserRole", businessProfile.ApplicationUser);
                 ViewBag.EventsAddress = events.StreetAddress;
                 ViewBag.CityStateZip = events.CityStateZip;
                 var eventStreetAddress = events.StreetAddress;
@@ -333,7 +331,7 @@ namespace GrillOut.Controllers
             var customerId = currentEvent.Select(c => c.CustomerId).FirstOrDefault();
             var eventCustomer = _context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
             var customerEmail = eventCustomer.Email;
-            await DepartureEmail("svolbrecht@yahoo.com");
+            await DepartureEmail("wiscoditka@gmail.com");
             return RedirectToAction(nameof(EmployeesEvents));
         }
 
@@ -341,11 +339,11 @@ namespace GrillOut.Controllers
         {
             var apiKey = Keys.sendGridKey;
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("test@example.com", "Example User");
+            var from = new EmailAddress("test@example.com", "GrillOut");
             var subject = "GrillOut Inbound!";
             var to = new EmailAddress(customerEmail, "Example User");
             var plainTextContent = "Your Grillout is on the way!";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var htmlContent = "Your GrillOut is on the way!";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }

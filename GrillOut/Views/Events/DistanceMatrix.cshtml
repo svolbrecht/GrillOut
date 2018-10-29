@@ -64,10 +64,11 @@
             var bounds = new google.maps.LatLngBounds;
             var markersArray = [];
 
-            var origin1 = { lat: 55.93, lng: -3.118 };
-            var origin2 = 'Greenwich, England';
-            var destinationA = 'Stockholm, Sweden';
-            var destinationB = { lat: 50.087, lng: 14.421 };
+            var streetName = "@ViewBag.EventsAddress";
+            var cityStateZip = "@ViewBag.CityStateZip";
+
+            var origin = '999 mt vernon ave milwaukee, wi';
+            var destination = (streetName + " " + cityStateZip + " ");
 
             var destinationIcon = 'https://chart.googleapis.com/chart?' +
                 'chst=d_map_pin_letter&chld=D|FF0000|000000';
@@ -81,10 +82,10 @@
 
             var service = new google.maps.DistanceMatrixService;
             service.getDistanceMatrix({
-                origins: [origin1, origin2],
-                destinations: [destinationA, destinationB],
+                origins: [origin],
+                destinations: [destination],
                 travelMode: 'DRIVING',
-                unitSystem: google.maps.UnitSystem.METRIC,
+                unitSystem: google.maps.UnitSystem.IMPERIAL,
                 avoidHighways: false,
                 avoidTolls: false
             }, function (response, status) {
