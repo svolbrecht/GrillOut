@@ -71,8 +71,7 @@ namespace GrillOut.Controllers
             if (ModelState.IsValid)
             {
                 var userId = _userManager.GetUserId(HttpContext.User);
-                var customer = await _context.Customers
-                    .FirstOrDefaultAsync(m => m.ApplicationUserId == userId);
+                var customer = await _context.Customers.Where(m => m.ApplicationUserId == userId).FirstOrDefaultAsync();
                 var customerId = customer.CustomerId;
                 events.CustomerId = customerId;
 

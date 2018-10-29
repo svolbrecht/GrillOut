@@ -4,14 +4,16 @@ using GrillOut.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GrillOut.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181026162916_packages model added")]
+    partial class packagesmodeladded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,29 +88,6 @@ namespace GrillOut.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("GrillOut.Models.Package", b =>
-                {
-                    b.Property<int>("PackageId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CustomerId");
-
-                    b.Property<string>("GrillOutPackage");
-
-                    b.Property<bool>("choseAverageGrillOut");
-
-                    b.Property<bool>("choseBasicGrillOut");
-
-                    b.Property<bool>("choseEliteGrillOut");
-
-                    b.HasKey("PackageId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -312,14 +291,6 @@ namespace GrillOut.Data.Migrations
                     b.HasOne("GrillOut.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
-                });
-
-            modelBuilder.Entity("GrillOut.Models.Package", b =>
-                {
-                    b.HasOne("GrillOut.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

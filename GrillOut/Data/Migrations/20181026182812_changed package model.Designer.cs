@@ -4,14 +4,16 @@ using GrillOut.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GrillOut.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181026182812_changed package model")]
+    partial class changedpackagemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace GrillOut.Data.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Package", b =>
+            modelBuilder.Entity("GrillOut.Models.Packages", b =>
                 {
                     b.Property<int>("PackageId")
                         .ValueGeneratedOnAdd()
@@ -108,7 +110,7 @@ namespace GrillOut.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Packages");
+                    b.ToTable("GrillOutPackages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -314,7 +316,7 @@ namespace GrillOut.Data.Migrations
                         .HasForeignKey("EmployeeId");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Package", b =>
+            modelBuilder.Entity("GrillOut.Models.Packages", b =>
                 {
                     b.HasOne("GrillOut.Models.Customer", "Customer")
                         .WithMany()

@@ -84,7 +84,7 @@ namespace GrillOut.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,CustomerName,StreetAddress,CityStateZip,IsDelivered,IsPickedUp,ApplicationUserId")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerID,CustomerName,StreetAddress,CityStateZip,IsDelivered,IsPickedUp,ApplicationUserId,Email")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace GrillOut.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerID,CustomerName,StreetAddress,CityStateZip,IsDelivered,IsPickedUp,ApplicationUserId")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerID,CustomerName,StreetAddress,CityStateZip,IsDelivered,IsPickedUp,ApplicationUserId,Email")] Customer customer)
         {
             if (id != customer.CustomerId)
             {

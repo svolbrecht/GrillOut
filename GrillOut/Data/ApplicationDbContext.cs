@@ -21,5 +21,7 @@ namespace GrillOut.Data
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Events> Events { get; set; }
+
+        public DbSet<GrillOut.Models.Package> Packages { get; set; }
     }
 }

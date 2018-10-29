@@ -20,13 +20,11 @@ namespace GrillOut.Controllers
     {
         private readonly ApplicationDbContext _context;
         UserManager<IdentityUser> _userManager;
-        UserManager<ApplicationUser> _aspUserManager;
 
-        public EmployeesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, UserManager<ApplicationUser> aspUserManager)
+        public EmployeesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
-            _aspUserManager = aspUserManager;
         }
 
         // GET: Employees
@@ -329,18 +327,16 @@ namespace GrillOut.Controllers
             }
         }
 
-        //public IActionResult SendDepartureEmail(int? id)
-        //{
-        //    var currentEvent = _context.Events.Where(c => c.Id == id);
-        //    var customerId = currentEvent.Select(c => c.CustomerId).FirstOrDefault();
-        //    var eventCustomer = _context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
-        //    var customerUserId = eventCustomer.ApplicationUserId;
-        //    ApplicationUser aspUser = _userManager.GetEmailAsync(eventCustomer);
-        //    var customerEmail = aspUser.Email;
-        //    var claims = _userManager.GetEmailAsync(eventCustomer);
-        //    DepartureEmail(customerEmail);
-        //    return RedirectToAction(nameof(EmployeesEvents));
-        //}
+        public async Task<IActionResult> SendDepartureEmailAsync(int? id)
+        {
+            var currentEvent = _context.Events.Where(c => c.Id == id);
+            var customerId = currentEvent.Select(c => c.CustomerId).FirstOrDefault();
+            var eventCustomer = _context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
+            var customerEmail = eventCustomer.Email;
+            await DepartureEmail("svolbrecht@yahoo.com");
+            return RedirectToAction(nameof(EmployeesEvents));
+        }
+
         static async Task DepartureEmail(string customerEmail)
         {
             var apiKey = Keys.sendGridKey;

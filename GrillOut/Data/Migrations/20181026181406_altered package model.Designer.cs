@@ -4,14 +4,16 @@ using GrillOut.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GrillOut.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181026181406_altered package model")]
+    partial class alteredpackagemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,15 +90,15 @@ namespace GrillOut.Data.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Package", b =>
+            modelBuilder.Entity("GrillOut.Models.GrillOutPackages", b =>
                 {
                     b.Property<int>("PackageId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId");
+                    b.Property<string>("BasicGrillOut");
 
-                    b.Property<string>("GrillOutPackage");
+                    b.Property<int>("CustomerId");
 
                     b.Property<bool>("choseAverageGrillOut");
 
@@ -108,7 +110,7 @@ namespace GrillOut.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Packages");
+                    b.ToTable("GrillOutPackages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -314,7 +316,7 @@ namespace GrillOut.Data.Migrations
                         .HasForeignKey("EmployeeId");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Package", b =>
+            modelBuilder.Entity("GrillOut.Models.GrillOutPackages", b =>
                 {
                     b.HasOne("GrillOut.Models.Customer", "Customer")
                         .WithMany()
