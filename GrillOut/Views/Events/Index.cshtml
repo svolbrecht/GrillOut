@@ -12,9 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.Customer)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Employee)
             </th>
@@ -27,21 +27,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.CityStateZip)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IsDelivered)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsPickedUp)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
-            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
             </td>
@@ -54,16 +54,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CityStateZip)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IsDelivered)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsPickedUp)
-            </td>
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Claim GrillOut</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> @*|
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Events" asp-action="EventMap" asp-route-id="@item.Id">Location</a>
             </td>
         </tr>
 }
