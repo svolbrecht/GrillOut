@@ -40,9 +40,6 @@ namespace GrillOut.Controllers
             var currentEvent = await _context.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
             var customerId = currentEvent.CustomerId;
             var package = await _context.Packages.Where(c => c.CustomerId == customerId).FirstOrDefaultAsync();
-            //var package = await _context.Packages
-            //    .Include(p => p.Customer)
-            //    .FirstOrDefaultAsync(m => m.PackageId == id);
             if (package == null)
             {
                 return NotFound();
@@ -76,8 +73,8 @@ namespace GrillOut.Controllers
                 await InsertPackageDetails(package);
                 return RedirectToAction(nameof(Create), "Events");
         //}
-        ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", package.CustomerId);
-            return View(package);
+        //ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", package.CustomerId);
+        //    return View(package);
         }
 
         public async Task InsertPackageDetails(Package package)

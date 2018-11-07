@@ -16,9 +16,6 @@ namespace GrillOut.Models
         [Display(Name = "Your Name")]
         public string EmployeeName { get; set; }
 
-        //[Display(Name = "Is Assigned")]
-        //public bool IsAssigned { get; set; }
-
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

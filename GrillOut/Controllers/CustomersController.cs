@@ -55,21 +55,6 @@ namespace GrillOut.Controllers
             }
 
             return View(user);
-
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var customer = await _context.Customers
-            //    .Include(c => c.ApplicationUser)
-            //    .FirstOrDefaultAsync(m => m.CustomerID == id);
-            //if (customer == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(customer);
         }
 
         // GET: Customers/Create
@@ -188,8 +173,6 @@ namespace GrillOut.Controllers
         public IActionResult Payment(int? id)
         {
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var ad = _context.Customers
-            //    .FirstOrDefault(m => m.ApplicationUserId == userid);
             return View();
         }
     }

@@ -27,12 +27,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.CityStateZip)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.IsDelivered)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPickedUp)
-            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -43,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.Customer.CustomerName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EventDate)
@@ -54,12 +48,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CityStateZip)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IsDelivered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPickedUp)
-            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Claim GrillOut</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

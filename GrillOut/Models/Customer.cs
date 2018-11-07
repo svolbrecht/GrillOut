@@ -25,12 +25,6 @@ namespace GrillOut.Models
         [Display(Name = "City, State, Zip")]
         public string CityStateZip { get; set; }
 
-        //[Display(Name = "Has been dropped off")]
-        //public bool IsDelivered { get; set; }
-
-        //[Display(Name = "Has been picked up")]
-        //public bool IsPickedUp { get; set; }
-
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

@@ -14,45 +14,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" /><input type="hidden" asp-for="CustomerId" /><input type="hidden" asp-for="EventDate" />
             <input type="hidden" asp-for="CityStateZip" /><input type="hidden" asp-for="StreetAddress" />
-            @*<div class="form-group">
-            <label asp-for="CustomerId" class="control-label"></label>
-            <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-            <span asp-validation-for="CustomerId" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
                 <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
                 <span asp-validation-for="EmployeeId" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="EventDate" class="control-label"></label>
-            <input asp-for="EventDate" class="form-control" />
-            <span asp-validation-for="EventDate" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="StreetAddress" class="control-label"></label>
-            <input asp-for="StreetAddress" class="form-control" />
-            <span asp-validation-for="StreetAddress" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CityStateZip" class="control-label"></label>
-            <input asp-for="CityStateZip" class="form-control" />
-            <span asp-validation-for="CityStateZip" class="text-danger"></span>
-        </div>*@
-            @*<div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsDelivered" /> @Html.DisplayNameFor(model => model.IsDelivered)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsPickedUp" /> @Html.DisplayNameFor(model => model.IsPickedUp)
-                    </label>
-                </div>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

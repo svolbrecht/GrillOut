@@ -7,18 +7,11 @@
 <h2>Your Events</h2>
 
 <p>
-    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
     <a asp-controller="Packages" asp-action="Create">Create A GrillOut</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>*@
-            @*<th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.EventDate)
             </th>
@@ -40,12 +33,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
-            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.EventDate)
             </td>
@@ -62,9 +49,7 @@
                 @Html.DisplayFor(modelItem => item.IsPickedUp)
             </td>
             <td>
-                <a asp-controller="Events" asp-action="EventMap" asp-route-id="@item.Id">View Map</a> @*|
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                <a asp-controller="Events" asp-action="EventMap" asp-route-id="@item.Id">View Map</a> 
             </td>
         </tr>
 }

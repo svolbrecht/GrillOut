@@ -78,7 +78,6 @@ namespace GrillOut.Controllers
                 _context.Add(events);
                 await _context.SaveChangesAsync();
                 await SendConfirmationEmail();
-                //SendSimpleMessage();
                 return RedirectToAction("Payment", "Customers");
             }
             //ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
@@ -190,25 +189,6 @@ namespace GrillOut.Controllers
             var response = await client.SendEmailAsync(msg);
         }
 
-        //public static IRestResponse SendSimpleMessage()
-        //{
-        //    RestClient client = new RestClient();
-        //    client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-        //    client.Authenticator =
-        //        new HttpBasicAuthenticator("api",
-        //                                    Keys.mailgunKey);
-        //    RestRequest request = new RestRequest();
-        //    request.AddParameter("domain", "sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org", ParameterType.UrlSegment);
-        //    request.Resource = "{domain}/messages";
-        //    request.AddParameter("from", "Excited User <mailgun@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org>");
-        //    request.AddParameter("to", "svolbrecht@yahoo.com");
-        //    request.AddParameter("to", "YOU@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org");
-        //    request.AddParameter("subject", "Hello");
-        //    request.AddParameter("text", "Testing some Mailgun awesomness!");
-        //    request.Method = Method.POST;
-        //    return client.Execute(request);
-        //}
-
         public async Task<IActionResult> EventMap(int? id)
         {
             {
@@ -222,27 +202,24 @@ namespace GrillOut.Controllers
                 {
                     return NotFound();
                 }
-                //ViewBag.ApplicationUserId = new SelectList(_context.Users, "Id", "UserRole", businessProfile.ApplicationUser);
                 ViewBag.EventsAddress = events.StreetAddress;
                 ViewBag.CityStateZip = events.CityStateZip;
                 return View(events);
             }
         }
 
-        public async Task<IActionResult> DistanceMatrix(int? id)
+        public IActionResult DistanceMatrix(int? id)
         {
             {
                 if (id == null)
                 {
-                    //not sure how to revise this for Core.  This code should alert user in thr case there is no user logged in.
-                    //return HttpStatusCode.BadRequest;
+                    return NotFound();
                 }
                 Events events = _context.Events.Find(id);
                 if (events == null)
                 {
                     return NotFound();
                 }
-                //ViewBag.ApplicationUserId = new SelectList(_context.Users, "Id", "UserRole", businessProfile.ApplicationUser);
                 ViewBag.EventsAddress = events.StreetAddress;
                 ViewBag.CityStateZip = events.CityStateZip;
                 return View();

@@ -21,16 +21,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.CityStateZip)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.IsDelivered)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPickedUp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>*@
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -45,8 +35,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CityStateZip)
             </td>
-            @* @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |

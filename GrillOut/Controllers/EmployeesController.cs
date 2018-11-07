@@ -285,25 +285,6 @@ namespace GrillOut.Controllers
             return _context.Events.Any(e => e.Id == id);
         }
 
-        //public static IRestResponse SendSimpleMessage(string text)
-        //{
-        //    RestClient client = new RestClient();
-        //    client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-        //    client.Authenticator =
-        //        new HttpBasicAuthenticator("api",
-        //                                    Keys.mailgunKey);
-        //    RestRequest request = new RestRequest();
-        //    request.AddParameter("domain", "sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org", ParameterType.UrlSegment);
-        //    request.Resource = "{domain}/messages";
-        //    request.AddParameter("from", "Excited User <mailgun@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org>");
-        //    request.AddParameter("to", "svolbrecht@yahoo.com");
-        //    request.AddParameter("to", "YOU@sandbox704c2ec99b85406fa343c888c7f3507f.mailgun.org");
-        //    request.AddParameter("subject", "Hello");
-        //    request.AddParameter("text", text);
-        //    request.Method = Method.POST;
-        //    return client.Execute(request);
-        //}
-
         public IActionResult EventDirections(int? id)
         {
             {
