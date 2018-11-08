@@ -198,7 +198,7 @@ namespace GrillOut.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MarkDelivered(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
+        public async Task<IActionResult> MarkDelivered(int id, [Bind("EventId,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
         {
             if (id != events.EventsId)
             {
@@ -249,7 +249,7 @@ namespace GrillOut.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MarkPickedUp(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
+        public async Task<IActionResult> MarkPickedUp(int id, [Bind("EventId,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
         {
             if (id != events.EventsId)
             {
