@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GrillOut.Data.Migrations
+namespace GrillOut.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181026194940_update")]
-    partial class update
+    [Migration("20181108160857_table creation")]
+    partial class tablecreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,7 @@ namespace GrillOut.Data.Migrations
 
             modelBuilder.Entity("GrillOut.Models.Events", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventsId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -81,7 +81,7 @@ namespace GrillOut.Data.Migrations
 
                     b.Property<string>("StreetAddress");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventsId");
 
                     b.HasIndex("CustomerId");
 

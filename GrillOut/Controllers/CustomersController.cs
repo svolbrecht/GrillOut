@@ -16,6 +16,9 @@ namespace GrillOut.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private int basicGrillOutCost = 20000;
+        private int averageGrillOutCost = 40000;
+        private int eliteGrillOutCost = 75000;
 
         public CustomersController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
@@ -172,8 +175,31 @@ namespace GrillOut.Controllers
 
         public IActionResult Payment(int? id)
         {
+
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.ApplicationUserId == userid).Single();
+            var customerId = customer.CustomerId;
+            ViewBag.packageCost = DetermineCost(customerId);
             return View();
+        }
+
+        private int DetermineCost(int customerId)
+        {
+            int cost;
+            var package = _context.Packages.Where(p => p.CustomerId == customerId).First();
+            if (package.choseBasicGrillOut == true)
+            {
+                cost = basicGrillOutCost;
+            }
+            else if (package.choseAverageGrillOut == true)
+            {
+                cost = averageGrillOutCost;
+            }
+            else 
+            {
+                cost = eliteGrillOutCost;
+            }
+            return cost;
         }
     }
 }

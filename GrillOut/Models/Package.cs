@@ -28,6 +28,5 @@ namespace GrillOut.Models
         [Display(Name = "Customer Id")]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
-
     }
 }

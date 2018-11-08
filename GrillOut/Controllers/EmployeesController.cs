@@ -200,7 +200,7 @@ namespace GrillOut.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MarkDelivered(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
         {
-            if (id != events.Id)
+            if (id != events.EventsId)
             {
                 return NotFound();
             }
@@ -214,7 +214,7 @@ namespace GrillOut.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventsExists(events.Id))
+                    if (!EventsExists(events.EventsId))
                     {
                         return NotFound();
                     }
@@ -251,7 +251,7 @@ namespace GrillOut.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MarkPickedUp(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
         {
-            if (id != events.Id)
+            if (id != events.EventsId)
             {
                 return NotFound();
             }
@@ -265,7 +265,7 @@ namespace GrillOut.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventsExists(events.Id))
+                    if (!EventsExists(events.EventsId))
                     {
                         return NotFound();
                     }
@@ -282,7 +282,7 @@ namespace GrillOut.Controllers
         }
         private bool EventsExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.EventsId == id);
         }
 
         public IActionResult EventDirections(int? id)
@@ -308,7 +308,7 @@ namespace GrillOut.Controllers
 
         public async Task<IActionResult> SendDepartureEmailAsync(int? id)
         {
-            var currentEvent = _context.Events.Where(c => c.Id == id);
+            var currentEvent = _context.Events.Where(c => c.EventsId == id);
             var customerId = currentEvent.Select(c => c.CustomerId).FirstOrDefault();
             var eventCustomer = _context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
             var customerEmail = eventCustomer.Email;

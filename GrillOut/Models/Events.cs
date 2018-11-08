@@ -11,7 +11,7 @@ namespace GrillOut.Models
     {
 
         [Key]
-        public int Id { get; set; }
+        public int EventsId { get; set; }
 
         [ForeignKey("Customer")]
         [Display(Name = "Customer Id")]

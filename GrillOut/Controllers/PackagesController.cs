@@ -37,7 +37,7 @@ namespace GrillOut.Controllers
             {
                 return NotFound();
             }
-            var currentEvent = await _context.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
+            var currentEvent = await _context.Events.Where(e => e.EventsId == id).FirstOrDefaultAsync();
             var customerId = currentEvent.CustomerId;
             var package = await _context.Packages.Where(c => c.CustomerId == customerId).FirstOrDefaultAsync();
             if (package == null)

@@ -44,7 +44,7 @@ namespace GrillOut.Controllers
             var events = await _context.Events
                 .Include(e => e.Customer)
                 .Include(e => e.Employee)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.EventsId == id);
             if (events == null)
             {
                 return NotFound();
@@ -74,14 +74,12 @@ namespace GrillOut.Controllers
                 var customer = await _context.Customers.Where(m => m.ApplicationUserId == userId).FirstOrDefaultAsync();
                 var customerId = customer.CustomerId;
                 events.CustomerId = customerId;
-
                 _context.Add(events);
                 await _context.SaveChangesAsync();
                 await SendConfirmationEmail();
                 return RedirectToAction("Payment", "Customers");
             }
-            //ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", events.CustomerId);
-            //ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", events.EmployeeId);
+          
             return View(events);
         }
 
@@ -110,7 +108,7 @@ namespace GrillOut.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,EmployeeId,EventDate,StreetAddress,CityStateZip,IsDelivered,IsPickedUp")] Events events)
         {
-            if (id != events.Id)
+            if (id != events.EventsId)
             {
                 return NotFound();
             }
@@ -124,7 +122,7 @@ namespace GrillOut.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventsExists(events.Id))
+                    if (!EventsExists(events.EventsId))
                     {
                         return NotFound();
                     }
@@ -151,7 +149,7 @@ namespace GrillOut.Controllers
             var events = await _context.Events
                 .Include(e => e.Customer)
                 .Include(e => e.Employee)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.EventsId == id);
             if (events == null)
             {
                 return NotFound();
@@ -173,7 +171,7 @@ namespace GrillOut.Controllers
 
         private bool EventsExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.EventsId == id);
         }
 
         static async Task SendConfirmationEmail()

@@ -4,16 +4,14 @@ using GrillOut.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GrillOut.Data.Migrations
+namespace GrillOut.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181022143237_dbset for event added")]
-    partial class dbsetforeventadded
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +30,8 @@ namespace GrillOut.Data.Migrations
                     b.Property<string>("CityStateZip");
 
                     b.Property<string>("CustomerName");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("StreetAddress");
 
@@ -59,9 +59,9 @@ namespace GrillOut.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Event", b =>
+            modelBuilder.Entity("GrillOut.Models.Events", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventsId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -69,7 +69,7 @@ namespace GrillOut.Data.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<int?>("EmployeeId");
 
                     b.Property<DateTime>("EventDate");
 
@@ -79,13 +79,36 @@ namespace GrillOut.Data.Migrations
 
                     b.Property<string>("StreetAddress");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventsId");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("GrillOut.Models.Package", b =>
+                {
+                    b.Property<int>("PackageId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerId");
+
+                    b.Property<string>("GrillOutPackage");
+
+                    b.Property<bool>("choseAverageGrillOut");
+
+                    b.Property<bool>("choseBasicGrillOut");
+
+                    b.Property<bool>("choseEliteGrillOut");
+
+                    b.HasKey("PackageId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -279,7 +302,7 @@ namespace GrillOut.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
-            modelBuilder.Entity("GrillOut.Models.Event", b =>
+            modelBuilder.Entity("GrillOut.Models.Events", b =>
                 {
                     b.HasOne("GrillOut.Models.Customer", "Customer")
                         .WithMany()
@@ -288,7 +311,14 @@ namespace GrillOut.Data.Migrations
 
                     b.HasOne("GrillOut.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("GrillOut.Models.Package", b =>
+                {
+                    b.HasOne("GrillOut.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

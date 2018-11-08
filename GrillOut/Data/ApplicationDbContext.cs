@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GrillOut.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace GrillOut.Data
 
         public DbSet<Events> Events { get; set; }
 
-        public DbSet<GrillOut.Models.Package> Packages { get; set; }
+        public DbSet<Package> Packages { get; set; }
+
     }
 }
